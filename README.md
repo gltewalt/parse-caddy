@@ -1,8 +1,4 @@
-# The Pink Parse Tool
-
-## Usage
-
-----
+# The Pink Parse Tool - A visual parse rule checker
 
 Type in your input.
 
