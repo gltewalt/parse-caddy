@@ -3,13 +3,14 @@
 ## Usage
 
 ----
-#### Type in your input.
+
+Type in your input.
 
 ![input](assets/type-input.png)
 
 ----
 
-#### Type in your rule. 
+Type in your rule. 
 
 It will check if it passes or fails as you type. Clearing the field will reset some things :)
 
@@ -17,6 +18,6 @@ It will check if it passes or fails as you type. Clearing the field will reset s
 
 ----
 
-#### Toggle to parse Block values.
+Toggle to parse Block values.
 
 ![block](assets/blocks.png)
