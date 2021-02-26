@@ -6,7 +6,7 @@ context [
 	
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
-    reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
+        reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
 
 	reset-field?: func [fld][
 		if none? fld/data [fld/color: white clear-output [fetch-txt match-txt end-txt]]
@@ -56,9 +56,9 @@ context [
 	]
     
 	view compose [
-    	title "The Pink Parse Tool"
-    	size 800x450
-    	backdrop pink
+    	        title "The Pink Parse Tool"
+    	        size 800x450
+    	        backdrop pink
 		style my-field: field 500x40 font [name: "DejaVu Sans" size: 12 color: black]
 		style my-text:  text 500x60 bold font [name: "DejaVu Sans" size: 14 color: black]
 		across
