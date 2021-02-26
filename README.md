@@ -3,7 +3,7 @@
 
 Type in your input.
 
-![input](assets/type-input.png)
+![input](type-input.png)
 
 ----
 
@@ -11,10 +11,14 @@ Type in your rule.
 
 It will check if it passes or fails as you type. Clearing the field will reset some things :)
 
-![rule](assets/rule.png)
+![rule](rule.png)
 
 ----
 
 Toggle to parse Block values.
 
-![block](assets/block.png)
+![block](block.png)
+
+----
+
+### Linux and Windows binaries available in bin, if you trust me.

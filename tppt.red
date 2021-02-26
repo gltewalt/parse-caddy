@@ -2,6 +2,8 @@ Red [
     Needs: 'View
 ]
 
+r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
+
 context [
 	
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
