@@ -26,7 +26,7 @@ context [
 		return: [logic!]  "TRUE: continue parsing, FALSE: stop and exit parsing"
 	][
 		switch event [
-			push [] ;
+			push [] ; gahhh! fix formatting github
 			pop	[
 				; before rule is popped from the stack
 				match-txt/data: reduce [
