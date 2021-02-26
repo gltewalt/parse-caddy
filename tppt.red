@@ -6,7 +6,7 @@ context [
 	
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
-    	reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
+        reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
 
 	reset-field?: func [fld][
 		if none? fld/data [fld/color: white clear-output [fetch-txt match-txt end-txt]]
@@ -16,7 +16,7 @@ context [
 		either true = t/data [to-block fld/text][unless none? fld/data [form fld/data]]
 	]
 
-    ; one-parse-event taken from environment/functions.red, and modified
+        ; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
 		"Standard parse/trace callback used by PARSE-TRACE"
 		event	[word!]   "Trace events: push, pop, fetch, match, iterate, paren, end"
@@ -27,10 +27,10 @@ context [
 		return: [logic!]  "TRUE: continue parsing, FALSE: stop and exit parsing"
 	][
 		switch event [
-			push [] 
+			push [] ;
 			pop [
-				; before rule is popped from the stack
-				match-txt/data: reduce [
+			    ;before rule is popped from the stack
+			    match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
 					"At index:" index? input 
@@ -56,9 +56,9 @@ context [
 	]
     
 	view compose [
-    		title "The Pink Parse Tool"
-    		size 800x450
-    		backdrop pink
+    	        title "The Pink Parse Tool"
+    	        size 800x450
+    	        backdrop pink
 		style my-field: field 500x40 font [name: "DejaVu Sans" size: 12 color: black]
 		style my-text:  text 500x60 bold font [name: "DejaVu Sans" size: 14 color: black]
 		across
