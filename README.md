@@ -1,9 +1,5 @@
 # The Pink Parse Tool
 
-## Usage
-
-----
-
 Type in your input.
 
 ![input](assets/type-input.png)
