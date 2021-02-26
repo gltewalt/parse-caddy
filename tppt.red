@@ -6,7 +6,7 @@ context [
 	
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
-    reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
+        reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
 
 	reset-field?: func [fld][
 		if none? fld/data [fld/color: white clear-output [fetch-txt match-txt end-txt]]
@@ -58,19 +58,19 @@ context [
     	title "The Pink Parse Tool"
     	size 800x450
     	backdrop pink
-		style my-field: field 500x40 font [name: "DejaVu Sans" size: 12 color: black]
-		style my-text:  text 500x60 bold font [name: "DejaVu Sans" size: 14 color: black]
-		across
-		t: toggle "Parse Block Data" right on-change [(r/data: copy "" reset-field? r)]
-		b: button "Reset" [(reset-all)]
-		return
-		below
+	style my-field: field 500x40 font [name: "DejaVu Sans" size: 12 color: black]
+	style my-text:  text 500x60 bold font [name: "DejaVu Sans" size: 14 color: black]
+	across
+	t: toggle "Parse Block Data" right on-change [(r/data: copy "" reset-field? r)]
+	b: button "Reset" [(reset-all)]
+	return
+	below
     	h4 "Input"
     	i: my-field 
     	h4 "Rule"
     	r: my-field on-change [(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? r)]
     	fetch-txt: my-text 
-		match-txt: my-text
-		end-txt:   my-text
+	match-txt: my-text
+	end-txt:   my-text
 	]
 ]
