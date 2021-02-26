@@ -1,5 +1,6 @@
 Red [
     Needs: 'View
+	Author: ["Greg Tewalt"]
 ]
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
@@ -68,9 +69,9 @@ context [
 		b: button "Reset" [(reset-all)]
 		return
 		below
-		h4 "Input"
+		h4 "Input" font [color: black]
 		i: my-field 
-		h4 "Rule"
+		h4 "Rule"  font [color: black]
 		r: my-field on-change [(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? r)]
 		fetch-txt: my-text 
 		match-txt: my-text
