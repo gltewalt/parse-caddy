@@ -16,7 +16,7 @@ context [
 		either true = t/data [to-block fld/text][unless none? fld/data [form fld/data]]
 	]
 
-    ; one-parse-event taken from environment/functions.red, and modified
+        ; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
 		"Standard parse/trace callback used by PARSE-TRACE"
 		event	[word!]   "Trace events: push, pop, fetch, match, iterate, paren, end"
@@ -28,9 +28,9 @@ context [
 	][
 		switch event [
 			push [] ;
-			pop	[
-				; before rule is popped from the stack
-				match-txt/data: reduce [
+			pop  [
+			    ;before rule is popped from the stack
+			    match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
 					"At index:" index? input 
