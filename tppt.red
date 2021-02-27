@@ -72,7 +72,9 @@ context [
 		h4 "Input" font [color: black]
 		i: my-field 
 		h4 "Rule"  font [color: black]
-		r: my-field on-change [(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? r)]
+		r: my-field on-change [
+			(attempt [parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? r])
+			]
 		fetch-txt: my-text 
 		match-txt: my-text
 		end-txt:   my-text
