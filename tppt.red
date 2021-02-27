@@ -30,22 +30,23 @@ context [
 		return: [logic!]  "TRUE: continue parsing, FALSE: stop and exit parsing"
 	][
 		switch event [
-			push [] ;
+			paren [] ; after evaluation of paren! expression
+			push  [] ; after rule is pushed on the stack
 			pop [
-			    ;before rule is popped from the stack
+			         ; before rule is popped from the stack
 			    match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
 					"At index:" index? input 
 				]
 			]
-			fetch [
+			fetch [ ; before a new rule is fetched
 				fetch-txt/data: reduce [
 					"Input:"    mold/flat/part input 50 newline
 					"Rule:"     mold/flat/part rule  50 newline
 				]
 			]
-			match [
+			match [ ; after a value has matched
 				either match? = true [
 					r/color: green
 				][
@@ -53,7 +54,7 @@ context [
 					clear-output [match-txt] 
 				]  
 			]
-			end   [end-txt/data: reduce ["Parse return:" match?]]
+			end   [end-txt/data: reduce ["Parse return:" match?]] ; after reaching end of input
 		]
 		true
 	]
