@@ -1688,7 +1688,7 @@ context [
 
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
-    reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
+        reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
 
 	reset-field?: func [fld][
 		if none? fld/data [fld/color: white clear-output [fetch-txt match-txt end-txt]]
@@ -1739,7 +1739,7 @@ context [
 	]
     
 	view compose [
-		    title "Parse Caddy"
+		title "Parse Caddy"
     		size 800x600
     		backdrop wheat
     		style my-field: field 500x40 font [name: "DejaVu Sans" size: 12 color: black]
@@ -1755,6 +1755,6 @@ context [
     		at 55x275 fetch-txt: my-text 
     		at 55x345 match-txt: my-text
     		at 55x435 end-txt: my-text
-		    at 645x300 image pic
+		at 645x300 image pic
 	]
 ]
