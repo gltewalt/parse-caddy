@@ -1688,7 +1688,7 @@ context [
 
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
-    reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
+        reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
 
 	reset-field?: func [fld][
 		if none? fld/data [fld/color: white clear-output [fetch-txt match-txt end-txt]]
