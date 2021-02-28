@@ -1,5 +1,5 @@
 
-# The Pink Parse Tool - A visual parse rule checker
+# Parse Caddy - A visual parse rule checker
 
 Type in your input.
 
