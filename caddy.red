@@ -5,7 +5,7 @@ Red [
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
 
-; big ass block of image data to be able to compile with image
+; big ol' block of image data to be able to compile with image
 pic: make image! [94x178 #{
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF

@@ -20,5 +20,3 @@ Toggle to parse Block values.
 ![block](block.png)
 
 ----
-
-### Linux and Windows binaries available in bin, if you trust me.
