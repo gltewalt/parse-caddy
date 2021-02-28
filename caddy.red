@@ -1738,16 +1738,16 @@ context [
 		true
 	]
     
-	view compose [
+    view compose [
 		    title "Parse Caddy"
     		size 800x600
     		backdrop wheat
-    		style my-field: field 500x40 font [name: "DejaVu Sans" size: 12 color: black]
-    		style my-text:  text  500x60 font [name: "DejaVu Sans" size: 14 color: black]
+    		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
+    		style my-text:  text  500x90 font [name: "Segoe UI" size: 16 color: black]
     		at 510x30 t: toggle "Parse Block Values" on-change [(r/data: copy "" reset-field? r)]
     		at 680x30 b: button "Reset" [(reset-all)]
     		at 50x70  h4 "Input"
-    		at 50x100 i: my-field 700x40 linen    
+    		at 50x100 i: my-field 700x40 linen 
     		at 50x170 h4 "Rule"
     		at 50x200 r: my-field 700x40 linen on-change [
 			    attempt [(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? r)]
@@ -1755,6 +1755,6 @@ context [
     		at 55x275 fetch-txt: my-text 
     		at 55x345 match-txt: my-text
     		at 55x435 end-txt: my-text
-		    at 645x300 image pic
+            at 645x320 image pic
 	]
 ]
