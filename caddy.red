@@ -1739,7 +1739,7 @@ context [
 	]
     
     view compose [
-		    title "Parse Caddy"
+		title "Parse Caddy"
     		size 800x600
     		backdrop wheat
     		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
@@ -1755,6 +1755,6 @@ context [
     		at 55x275 fetch-txt: my-text 
     		at 55x345 match-txt: my-text
     		at 55x435 end-txt: my-text
-            at 645x320 image pic
+                at 645x320 image pic
 	]
 ]
