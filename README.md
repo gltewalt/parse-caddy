@@ -1,5 +1,7 @@
 
-# Parse Caddy - A visual parse rule checker
+![caddy](caddy.png)
+
+# Parse Caddy - A visual parse rule checker     
 
 Type in your input.
 
