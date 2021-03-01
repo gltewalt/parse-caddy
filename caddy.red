@@ -11,7 +11,7 @@ context [
 
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
-        reset-all: does [i/data: copy "" r/data: copy "" reset-field? r t/data: false]
+        reset-all: does [i/data: copy "" r/data: copy "" reset-field? r reset-field? i t/data: false]
 
 	reset-field?: func [fld][
 		if none? fld/data [fld/color: white clear-output [fetch-txt match-txt end-txt]]
@@ -20,6 +20,15 @@ context [
 	convert-to-block-vals?: func [fld] [
 		either true = t/data [to-block fld/text][fld/text]
 	]
+
+	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
+		either none = fld/data [
+			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
+		][
+			fetch-txt/data: copy ""
+		]
+	]
+	
 
         ; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
@@ -67,10 +76,10 @@ context [
     		backdrop wheat
     		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
     		style my-text:  text  500x90 font [name: "Segoe UI" size: 16 color: black]
-    		at 510x30 t: toggle "Parse Block Values" on-change [(r/data: copy "" reset-field? r)]
+    		at 510x30 t: toggle "Parse Block Values" on-change [(r/data: copy "" reset-field? r reset-field? i)]
     		at 680x30 b: button "Reset" [(reset-all)]
     		at 50x70  h4 "Input"
-    		at 50x100 i: my-field 700x40 linen 
+    		at 50x100 i: my-field 700x40 linen on-change [(if t/data = true [scan i])]
     		at 50x170 h4 "Rule"
     		at 50x200 r: my-field 700x40 linen on-change [
 			    attempt [(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? r)]
