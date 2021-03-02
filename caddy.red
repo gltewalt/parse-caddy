@@ -10,34 +10,50 @@ pic: load/as #do keep [read/binary %caddy.png] 'png    ;-- owe rubles?
 context [
 
 	check: does [
-		attempt [(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? [r])]
+		attempt [
+			(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? [r])
+		]
 	]
 
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
-        reset-all: does [i/data: copy "" r/data: copy "" reset-field? [r i] t/data: false]
-
-	reset-field?: func [flds [block!]][
-		foreach f flds [
-			face: get f 
-			if none? face/data [face/color: white clear-output [fetch-txt match-txt end-txt]]
-		]
-	]
-  
 	convert-to-block-vals?: func [fld] [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
-	scan: func [fld][
-		either error! = transcode/scan fld/text [
-			fetch-txt/data: {Watch out for these illegal characters in words: \ , [ ] ( ) { } " # $ :}
-			clear-output [match-txt end-txt]
+	
+	reset-all: does [i/data: copy "" r/data: copy "" reset-field? [r i] t/data: false]
+
+	reset-field?: func [flds [block!]][
+		foreach f flds [
+			face: get f 
+			if none? face/data [
+				face/color: white clear-output [fetch-txt match-txt end-txt]
+			]
+		]
+	]
+  
+	; scan: func [fld][
+	; 	either error! = transcode/scan fld/text [
+	; 		fetch-txt/data: {Watch out for these illegal characters in words: \ , [ ] ( ) { } " # $ :}
+	; 		clear-output [match-txt end-txt]
+	; 		r/color: white
+	; 	][
+	; 		fetch-txt/data: copy ""
+	; 	]
+	; ]
+
+	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
+		either none = fld/data [
+			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
+		        clear-output [match-txt end-txt]
 			r/color: white
 		][
-			fetch-txt/data: copy ""]
+			fetch-txt/data: copy ""
+		]
 	]
 
-        ; on-parse-event taken from environment/functions.red, and modified
+	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
 		"Standard parse/trace callback used by PARSE-TRACE"
 		event	[word!]   "Trace events: push, pop, fetch, match, iterate, paren, end"
@@ -51,7 +67,7 @@ context [
 			paren [] ; after evaluation of paren! expression
 			push  [] ; after rule is pushed on the stack
 			pop [
-			         ; before rule is popped from the stack
+				 ; before rule is popped from the stack
 			    match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
@@ -95,6 +111,6 @@ context [
     		at 55x275 fetch-txt: my-text 
     		at 55x345 match-txt: my-text
     		at 55x435 end-txt: my-text
-                at 645x320 image pic
+		at 645x320 image pic
 	]
 ]
