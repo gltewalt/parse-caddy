@@ -65,7 +65,8 @@ context [
 	][
 		switch event [
 			paren [] ; after evaluation of paren! expression
-			push  [] ; after rule is pushed on the stack
+			push  [
+			] ; after rule is pushed on the stack
 			pop [
 				 ; before rule is popped from the stack
 			    match-txt/data: reduce [
@@ -77,12 +78,13 @@ context [
 			fetch [ ; before a new rule is fetched
 				fetch-txt/data: reduce [
 					"Input:"    mold/flat/part input 50 newline
-					"Rule:"     mold/flat/part rule  50 newline
+					"Rule:"     mold/flat/part rule 50 newline
 				]
 			]
 			match [ ; after a value has matched
 				either match? = true [
 					r/color: 102.255.102  ; shade of green
+					i/text: head input    ; if "input" changes, update the text in the Input field
 				][
 					r/color: 255.51.51    ; shade of red
 					clear-output [match-txt] 
@@ -103,7 +105,7 @@ context [
     		at 680x30 b: button "Reset" [(reset-all)]
     		at 50x70  h4 "Input"
     		at 50x100 i: my-field 700x40 linen on-change [
-				(check)
+			;	(check)
 				(if t/data = true [scan i])
 			]
     		at 50x170 h4 "Rule"
