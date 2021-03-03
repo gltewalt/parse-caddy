@@ -103,7 +103,7 @@ context [
     		backdrop wheat
     		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
     		style my-text:  text  500x90 font [name: "Segoe UI" size: 16 color: black]
-			at 50x30  mt: toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field [r i])]
+		at 50x30  mt: toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field [r i])]
     		at 510x30 t: toggle "Parse Block Values" on-change [
 				(r/data: copy "" mt/data: false reset-field [r i])
 			]
