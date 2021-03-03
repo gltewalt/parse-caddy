@@ -3,9 +3,9 @@
 
 # Parse Caddy - A visual parse rule checker     
 
-Type in your input.
+Type in your input. Modify Input? is recommended, otherwise watch the "Remaining input:" text for changes.
 
-![input](type-input.png)
+![input](input.png)
 
 ----
 
