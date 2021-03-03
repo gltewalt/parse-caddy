@@ -22,7 +22,7 @@ context [
 	]
 
 	
-	reset-all: does [i/data: copy "" r/data: copy "" reset-field? [r i] t/data: false]
+	reset-all: does [i/data: copy "" r/data: copy "" reset-field? [r i] t/data: false mt/data: false]
 
 	reset-field?: func [flds [block!]][
 		foreach f flds [
@@ -52,7 +52,7 @@ context [
 			fetch-txt/data: copy ""
 		]
 	]
-
+	
 	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
 		"Standard parse/trace callback used by PARSE-TRACE"
@@ -84,7 +84,9 @@ context [
 			match [ ; after a value has matched
 				either match? = true [
 					r/color: 102.255.102  ; shade of green
-					i/text: head input    ; if "input" changes, update the text in the Input field
+					if true = mt/data [
+						i/text: head input    ; if "input" changes, update the text in the Input field
+					]
 				][
 					r/color: 255.51.51    ; shade of red
 					clear-output [match-txt] 
@@ -101,18 +103,18 @@ context [
     		backdrop wheat
     		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
     		style my-text:  text  500x90 font [name: "Segoe UI" size: 16 color: black]
-    		at 510x30 t: toggle "Parse Block Values" on-change [(r/data: copy "" reset-field? [r i])]
+			at 50x30  mt: toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field [r i])]
+    		at 510x30 t: toggle "Parse Block Values" on-change [
+				(r/data: copy "" mt/data: false reset-field [r i])
+			]
     		at 680x30 b: button "Reset" [(reset-all)]
     		at 50x70  h4 "Input"
-    		at 50x100 i: my-field 700x40 linen on-change [
-			;	(check)
-				(if t/data = true [scan i])
-			]
+    		at 50x100 i: my-field 700x40 linen on-change [(if t/data = true [scan i])]
     		at 50x170 h4 "Rule"
     		at 50x200 r: my-field 700x40 linen on-change [(check)] 
     		at 55x275 fetch-txt: my-text 
-    		at 55x345 match-txt: my-text
-    		at 55x435 end-txt: my-text
+    		at 55x360 match-txt: my-text
+    		at 55x445 end-txt: my-text
 		at 645x320 image pic
 	]
 ]
