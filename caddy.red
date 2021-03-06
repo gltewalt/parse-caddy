@@ -82,7 +82,6 @@ context [
 				]
 				either match? = true [
 					r/color: 102.255.102  	  ; shade of green
-					i/selected: to pair! rejoin [index? input 'x index? input] ; highlight match position in Input
 					if true = mt/data [
 						i/text: head input    ; if "input" changes, update the text in the Input field
 					]
