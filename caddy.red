@@ -21,7 +21,14 @@ context [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
-	
+	highlight?: func [tgl][
+		either true = tgl/data [
+			i/selected: to pair! rejoin [index? input 'x index? input]
+		][
+			i/selected: none
+		]
+	]
+
 	reset-all: does [i/data: copy "" r/data: copy "" reset-field? [r i] t/data: false mt/data: false]
 
 	reset-field?: func [flds [block!]][
@@ -65,14 +72,24 @@ context [
 	][
 		switch event [
 			paren [] ; after evaluation of paren! expression
-			push  [
-			] ; after rule is pushed on the stack
-			pop [
-				 ; before rule is popped from the stack
-			    match-txt/data: reduce [
+			push  [] ; after rule is pushed on the stack
+			pop [    
+				; before rule is popped from the stack
+				match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
 					"At index:" index? input 
+				]
+				either match? = true [
+					r/color: 102.255.102  	  ; shade of green
+					i/selected: to pair! rejoin [index? input 'x index? input] ; highlight match position in Input
+					if true = mt/data [
+						i/text: head input    ; if "input" changes, update the text in the Input field
+					]
+				][
+					r/color: 255.51.51    	  ; shade of red
+					i/selected: none
+					clear-output [match-txt] 
 				]
 			]
 			fetch [ ; before a new rule is fetched
@@ -81,20 +98,13 @@ context [
 					"Rule:"     mold/flat/part rule 50 newline
 				]
 			]
-			match [ ; after a value has matched
-				either match? = true [
-					r/color: 102.255.102  ; shade of green
-					if true = mt/data [
-						i/text: head input    ; if "input" changes, update the text in the Input field
-					]
-				][
-					r/color: 255.51.51    ; shade of red
-					clear-output [match-txt] 
-				]  
-			]
-			end   [end-txt/data: reduce ["Parse return:" match?]] ; after reaching end of input
+			match [] ; after a value has matched
+			
+			end [    ; after reaching end of input
+				end-txt/data: reduce ["Parse return:" match?]
+			] 
 		]
-		true  ; shiiiiiiiit
+		true
 	]
     
     view compose [
@@ -103,15 +113,15 @@ context [
     		backdrop wheat
     		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
     		style my-text:  text  500x90 font [name: "Segoe UI" size: 16 color: black]
-		at 50x30  mt: toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field [r i])]
+		at 50x30  mt: toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field? [r i])]
     		at 510x30 t: toggle "Parse Block Values" on-change [
-				(r/data: copy "" mt/data: false reset-field [r i])
+				(r/data: copy "" mt/data: false reset-field? [r i])
 			]
     		at 680x30 b: button "Reset" [(reset-all)]
     		at 50x70  h4 "Input"
-    		at 50x100 i: my-field 700x40 linen on-change [(if t/data = true [scan i])]
+    		at 50x100 i: my-field 700x40 on-change [(if t/data = true [scan i])]
     		at 50x170 h4 "Rule"
-    		at 50x200 r: my-field 700x40 linen on-change [(check)] 
+    		at 50x200 r: my-field 700x40 on-change [(check)] 
     		at 55x275 fetch-txt: my-text 
     		at 55x360 match-txt: my-text
     		at 55x445 end-txt: my-text
