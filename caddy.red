@@ -5,7 +5,7 @@ Red [
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
 
-pic: load/as #do keep [read/binary %caddy.png] 'png    ;-- owe rubles?
+img: load/as #do keep [read/binary %caddy.png] 'png 
 
 context [
 
@@ -21,35 +21,19 @@ context [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
-	highlight?: func [tgl][
-		either true = tgl/data [
-			i/selected: to pair! rejoin [index? input 'x index? input]
-		][
-			i/selected: none
-		]
-	]
-
 	reset-all: does [i/data: copy "" r/data: copy "" reset-field? [r i] t/data: false mt/data: false]
 
 	reset-field?: func [flds [block!]][
 		foreach f flds [
 			face: get f 
 			if none? face/data [
-				face/color: white clear-output [fetch-txt match-txt end-txt]
+				face/color: white 
+				clear-output [fetch-txt match-txt end-txt] 
+				i/selected: none 
 			]
 		]
 	]
   
-	; scan: func [fld][
-	; 	either error! = transcode/scan fld/text [
-	; 		fetch-txt/data: {Watch out for these illegal characters in words: \ , [ ] ( ) { } " # $ :}
-	; 		clear-output [match-txt end-txt]
-	; 		r/color: white
-	; 	][
-	; 		fetch-txt/data: copy ""
-	; 	]
-	; ]
-
 	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
 		either none = fld/data [
 			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
@@ -81,14 +65,14 @@ context [
 					"At index:" index? input 
 				]
 				either match? = true [
-					r/color: 102.255.102  	  ; shade of green
+					r/color: 102.255.102  	      ; turn a shade of green
+					i/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
 					if true = mt/data [
 						i/text: head input    ; if "input" changes, update the text in the Input field
 					]
 				][
-					r/color: 255.51.51    	  ; shade of red
-					i/selected: none
 					clear-output [match-txt] 
+					; red color is taken care of in the fetch event
 				]
 			]
 			fetch [ ; before a new rule is fetched
@@ -96,6 +80,8 @@ context [
 					"Input:"    mold/flat/part input 50 newline
 					"Rule:"     mold/flat/part rule 50 newline
 				]
+				r/color: 255.51.51  ; shade of red
+				i/selected: none
 			]
 			match [] ; after a value has matched
 			
@@ -113,7 +99,7 @@ context [
     		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
     		style my-text:  text  500x90 font [name: "Segoe UI" size: 16 color: black]
 		at 50x30  mt: toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field? [r i])]
-    		at 510x30 t: toggle "Parse Block Values" on-change [
+    		at 510x30 t:  toggle "Parse Block Values" on-change [
 				(r/data: copy "" mt/data: false reset-field? [r i])
 			]
     		at 680x30 b: button "Reset" [(reset-all)]
@@ -124,6 +110,6 @@ context [
     		at 55x275 fetch-txt: my-text 
     		at 55x360 match-txt: my-text
     		at 55x445 end-txt: my-text
-		at 645x320 image pic
+		at 645x320 image img 
 	]
 ]
