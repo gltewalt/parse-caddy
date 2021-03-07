@@ -1,6 +1,7 @@
 Red [
     Needs: 'View
-    Author: ["Greg Tewalt"]
+    Title:  "Parse Caddy"
+    Author: "Greg Tewalt"
 ]
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
@@ -11,7 +12,7 @@ context [
 
 	check: does [
 		attempt [
-			(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? [r])
+			(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? [r] populate-log)
 		]
 	]
 
@@ -21,29 +22,6 @@ context [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
-	reset-all: does [i/data: copy "" r/data: copy "" reset-field? [r i] t/data: false mt/data: false]
-
-	reset-field?: func [flds [block!]][
-		foreach f flds [
-			face: get f 
-			if none? face/data [
-				face/color: white 
-				clear-output [fetch-txt match-txt end-txt] 
-				i/selected: none 
-			]
-		]
-	]
-  
-	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
-		either none = fld/data [
-			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
-		        clear-output [match-txt end-txt]
-			r/color: white
-		][
-			fetch-txt/data: copy ""
-		]
-	]
-	
 	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
 		"Standard parse/trace callback used by PARSE-TRACE"
@@ -62,11 +40,13 @@ context [
 				match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
-					"At index:" index? input 
+					"At index:" index? input newline
 				]
 				either match? = true [
 					r/color: 102.255.102  	      ; turn a shade of green
-					i/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
+					if any [t/data = false t/data = none][                         ; if we're not parsing block values,
+						i/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
+					]
 					if true = mt/data [
 						i/text: head input    ; if "input" changes, update the text in the Input field
 					]
@@ -92,24 +72,85 @@ context [
 		true
 	]
     
-    view compose [
-		title "Parse Caddy"
-    		size 800x600
-    		backdrop wheat
-    		style my-field: field 500x40 font [name: "Segoe UI" size: 14 color: black]
-    		style my-text:  text  500x90 font [name: "Segoe UI" size: 16 color: black]
-		at 50x30  mt: toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field? [r i])]
-    		at 510x30 t:  toggle "Parse Block Values" on-change [
-				(r/data: copy "" mt/data: false reset-field? [r i])
+	populate-log: does [
+		log/text: ""
+		append log/text rejoin [
+		       newline "***" newline form fetch-txt/data form match-txt/data form end-txt/data newline "***" newline
+		]
+	]
+
+	reset-all: does [
+		i/data: copy "" 
+		r/data: copy "" 
+		reset-field? [r i] 
+		t/data: false 
+		mt/data: false
+		reset-log
+	]
+
+	reset-field?: func [flds [block!]][
+		foreach f flds [
+			face: get f 
+			if none? face/data [
+				face/color: white 
+				clear-output [fetch-txt match-txt end-txt] 
+				i/selected: none 
 			]
-    		at 680x30 b: button "Reset" [(reset-all)]
+		]
+	]
+  
+    	reset-log: does [clear log/text]
+
+	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
+		either none = fld/data [
+			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
+		        clear-output [match-txt end-txt]
+			r/color: white
+		][
+			fetch-txt/data: copy ""
+		]
+	]
+
+	;-- Begin VID data ---------------------------------------------------------------------------------------------------
+
+	home: [
+		size 80x600
+		backdrop wheat
+		style my-field: field 500x40  font [name: "Segoe UI" size: 14 color: black]
+    		style my-text:  text  500x90  font [name: "Segoe UI" size: 16 color: black]
+		at 50x30  mt:   toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field? [r i])]
+    		at 510x30 t:    toggle "Parse Block Values" on-change [(r/data: copy "" mt/data: false reset-field? [r i])]
+    		at 680x30 b:    button "Reset" [(reset-all)]
     		at 50x70  h4 "Input"
     		at 50x100 i: my-field 700x40 on-change [(if t/data = true [scan i])]
     		at 50x170 h4 "Rule"
     		at 50x200 r: my-field 700x40 on-change [(check)] 
     		at 55x275 fetch-txt: my-text 
     		at 55x360 match-txt: my-text
-    		at 55x445 end-txt: my-text
+    		at 55x445 end-txt:   my-text
 		at 645x320 image img 
+	]
+
+	log: [
+		size 800x600
+		backdrop wheat 
+		style my-area: area 710x450 font [name: "Segoe UI" size: 14 color: black]
+		at 50x30  button "Select All" [
+			unless none? log/text [log/selected: to pair! rejoin [1 'x (length? log/text) + 1]]
+		]
+		at 150x30 button "Copy" [
+			unless none? log/selected [write-clipboard copy/part log/text log/selected]
+		]
+		at 600x30 button "Save" [
+			attempt [write rejoin [request-dir now/date "-caddy-log.txt"] log/text]
+		]
+		at 670x30 button "Clear Log" [(reset-log)]
+		at 50x70  h4 "Log file" 
+		at 50x100 log: my-area 
+	]
+
+    	view compose/deep [
+		title "Parse Caddy"
+	    	tab-panel ["Home" [(home)] "Log" [(log)]]
 	]
 ]
