@@ -22,9 +22,7 @@ context [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
-    load-multi-rule: does [
-		do load mr/text
-	]
+    	load-multi-rule: does [do load mr/text]
 
 	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
@@ -104,7 +102,7 @@ context [
 		]
 	]
   
-    reset-log:   does [clear log/text]
+    	reset-log:   does [clear log/text]
 	reset-mutli: does [clear mr/text]
 
 	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
@@ -137,7 +135,7 @@ context [
 		at 645x320 image img 
 	]
 
-    multi-rule: [
+    	multi-rule: [
 		size 800x600
 		backdrop wheat 
 		style my-area: area 710x450 font [name: "Segoe UI" size: 14 color: black]
