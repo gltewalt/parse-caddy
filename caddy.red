@@ -22,6 +22,10 @@ context [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
+    load-multi-rule: does [
+		do load mr/text
+	]
+
 	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
 		"Standard parse/trace callback used by PARSE-TRACE"
@@ -86,6 +90,7 @@ context [
 		t/data: false 
 		mt/data: false
 		reset-log
+		reset-mutli
 	]
 
 	reset-field?: func [flds [block!]][
@@ -99,7 +104,8 @@ context [
 		]
 	]
   
-    	reset-log: does [clear log/text]
+    reset-log:   does [clear log/text]
+	reset-mutli: does [clear mr/text]
 
 	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
 		either none = fld/data [
@@ -131,6 +137,17 @@ context [
 		at 645x320 image img 
 	]
 
+    multi-rule: [
+		size 800x600
+		backdrop wheat 
+		style my-area: area 710x450 font [name: "Segoe UI" size: 14 color: black]
+		at 50x30  button "Load Rules"  [load-multi-rule]
+		at 660x30 button "Clear Rules" [reset-mutli]
+		at 50x70  h4 "Enter Multiple Rules" 
+		at 50x100 mr: my-area
+	]
+
+
 	log: [
 		size 800x600
 		backdrop wheat 
@@ -141,16 +158,16 @@ context [
 		at 150x30 button "Copy" [
 			unless none? log/selected [write-clipboard copy/part log/text log/selected]
 		]
-		at 600x30 button "Save" [
+		at 590x30 button "Save" [
 			attempt [write rejoin [request-dir now/date "-caddy-log.txt"] log/text]
 		]
-		at 670x30 button "Clear Log" [(reset-log)]
+		at 660x30 button "Clear Log" [(reset-log)]
 		at 50x70  h4 "Log file" 
 		at 50x100 log: my-area 
 	]
 
     	view compose/deep [
 		title "Parse Caddy"
-	    	tab-panel ["Home" [(home)] "Log" [(log)]]
+	    	tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
 	]
 ]
