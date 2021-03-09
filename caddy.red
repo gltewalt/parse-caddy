@@ -1,7 +1,7 @@
 Red [
-    Needs: 'View
-    Title:  "Parse Caddy"
-    Author: "Greg Tewalt"
+	Needs: 'View
+	Title:  "Parse Caddy"
+	Author: "Greg Tewalt"
 ]
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
@@ -22,7 +22,7 @@ context [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
-    	load-multi-rule: does [do load mr/text]
+		load-multi-rule: does [do load mr/text]
 
 	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
@@ -73,11 +73,11 @@ context [
 		]
 		true
 	]
-    
+	
 	populate-log: does [
 		log/text: ""
 		append log/text rejoin [
-		       newline "***" newline form fetch-txt/data form match-txt/data form end-txt/data newline "***" newline
+			   newline "***" newline form fetch-txt/data form match-txt/data form end-txt/data newline "***" newline
 		]
 	]
 
@@ -102,13 +102,14 @@ context [
 		]
 	]
   
-    	reset-log:   does [clear log/text]
+	reset-log:   does [clear log/text]
+
 	reset-mutli: does [clear mr/text]
 
 	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
 		either none = fld/data [
 			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
-		        clear-output [match-txt end-txt]
+				clear-output [match-txt end-txt]
 			r/color: white
 		][
 			fetch-txt/data: copy ""
@@ -118,29 +119,30 @@ context [
 	;-- Begin VID data ---------------------------------------------------------------------------------------------------
 
 	home: [
+
 		size 80x600
 		backdrop wheat
 		style my-field: field 500x40  font [name: "Segoe UI" size: 14 color: black]
-    		style my-text:  text  500x90  font [name: "Segoe UI" size: 16 color: black]
-		at 50x30  mt:   toggle "Modify Input?" on-change [(r/data: copy "" t/data: false reset-field? [r i])]
-    		at 510x30 t:    toggle "Parse Block Values" on-change [(r/data: copy "" mt/data: false reset-field? [r i])]
-    		at 680x30 b:    button "Reset" [(reset-all)]
-    		at 50x70  h4 "Input"
-    		at 50x100 i: my-field 700x40 on-change [(if t/data = true [scan i])]
-    		at 50x170 h4 "Rule"
-    		at 50x200 r: my-field 700x40 on-change [(check)] 
-    		at 55x275 fetch-txt: my-text 
-    		at 55x360 match-txt: my-text
-    		at 55x445 end-txt:   my-text
+		style my-text:  text  500x90  font [name: "Segoe UI" size: 16 color: black]
+		at 50x30  mt:   check "Modify Input Field" on-change [(r/data: copy "" t/data: false reset-field? [r i])]
+		at 200x30 t:    check "Parse Block Values" on-change [(r/data: copy "" mt/data: false reset-field? [r i])]
+		at 635x30 b:    button "Reset Caddy" [(reset-all)]
+		at 50x70  h4 "Input"
+		at 50x100 i: my-field 700x40 on-change [(if t/data = true [scan i])]
+		at 50x170 h4 "Rule"
+		at 50x200 r: my-field 700x40 on-change [(check)] 
+		at 55x275 fetch-txt: my-text 
+		at 55x360 match-txt: my-text
+		at 55x445 end-txt:   my-text
 		at 645x320 image img 
 	]
 
-    	multi-rule: [
+	multi-rule: [
 		size 800x600
 		backdrop wheat 
 		style my-area: area 710x450 font [name: "Segoe UI" size: 14 color: black]
 		at 50x30  button "Load Rules"  [load-multi-rule]
-		at 660x30 button "Clear Rules" [reset-mutli]
+		at 650x30 button "Clear Rules" [reset-mutli]
 		at 50x70  h4 "Enter Multiple Rules" 
 		at 50x100 mr: my-area
 	]
@@ -156,16 +158,16 @@ context [
 		at 150x30 button "Copy" [
 			unless none? log/selected [write-clipboard copy/part log/text log/selected]
 		]
-		at 590x30 button "Save" [
-			attempt [write rejoin [request-dir now/date "-caddy-log.txt"] log/text]
+		at 580x30 button "Save" [
+			attempt [write rejoin [request-dir now "-caddy-log.txt"] log/text]
 		]
-		at 660x30 button "Clear Log" [(reset-log)]
+		at 650x30 button "Clear Log" [(reset-log)]
 		at 50x70  h4 "Log file" 
 		at 50x100 log: my-area 
 	]
 
-    	view compose/deep [
+		view compose/deep [
 		title "Parse Caddy"
-	    	tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
+			tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
 	]
 ]

@@ -1,24 +1,61 @@
 
-![caddy](caddy.png)
+
+![caddy](caddy.png) 
 
 # Parse Caddy - A visual parse rule checker     
 
-Type in your input. Modify Input? is recommended, otherwise watch the "Remaining input:" text for changes.
+What's Parse?
+
+"So, in short, what is Parse? It is an embedded DSL (we call them "dialects" in the Rebol world) for parsing input series using grammar rules. The Parse dialect is an enhanced member of the TDPL family. Parse's common usages are for checking, validating, extracting, modifying input data or even implementing embedded and external DSLs."
+
+[Overview here](https://www.red-lang.org/search?q=parse)
+
+[Full documentation here](https://github.com/red/docs/blob/master/en/parse.adoc)
+
+----
+
+## Tool usage
+
+* Type in your input. 
+- Modify Input Field is recommended, otherwise watch the "Remaining input:" text for changes.
+
 
 ![input](input.png)
 
 ----
 
-Type in your rule. 
+* Type in your rule. 
 
-It will check if it passes or fails as you type. Clearing the field will reset some things :)
+- The tool will check if the rule passes or fails as you type. Clearing the field will reset some things :)
 
 ![rule](rule.png)
 
 ----
 
-Toggle to parse Block values.
+* Check to parse Block values.
 
 ![block](block.png)
 
 ----
+
+* Type in multiple parse rules here.
+- Click the Load Rules button.
+
+![multi](multi.png)
+
+* Use them in the Rule field
+
+![multi-2](multi-2.png)
+
+**CAUTION**
+
+In the current version of the tool, anything in the Multiple Rules area will be loaded and executed by the Red language if you click Load Rules. 
+
+Be careful.
+
+----
+
+* And there's a Log area for those who like logs.
+- The buttons should be self explanatory, but let me know if you have questions.
+
+![log](log.png)
