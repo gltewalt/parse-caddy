@@ -22,7 +22,7 @@ From red-lang.org
 - Modify Input Field is recommended, otherwise watch the "Remaining input:" text for changes.
 
 
-![input](input.png)
+![input](images/input.png)
 
 ----
 
@@ -30,24 +30,24 @@ From red-lang.org
 
 - The tool will check if the rule passes or fails as you type. Clearing the field will reset some things :)
 
-![rule](rule.png)
+![rule](images/rule.png)
 
 ----
 
 * Check to parse Block values.
 
-![block](block.png)
+![block](images/block.png)
 
 ----
 
 * Type in multiple parse rules here.
 - Click the Load Rules button.
 
-![multi](multi.png)
+![multi](images/multi.png)
 
 * Use them in the Rule field
 
-![multi-2](multi-2.png)
+![multi-2](images/multi-2.png)
 
 **CAUTION**
 
@@ -60,4 +60,4 @@ Be careful.
 * And there's a Log area for those who like logs.
 - The buttons should be self explanatory, but let me know if you have questions.
 
-![log](log.png)
+![log](images/log.png)
