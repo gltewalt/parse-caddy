@@ -6,11 +6,13 @@
 
 What's Parse?
 
+From red-lang.org
+
 "So, in short, what is Parse? It is an embedded DSL (we call them "dialects" in the Rebol world) for parsing input series using grammar rules. The Parse dialect is an enhanced member of the TDPL family. Parse's common usages are for checking, validating, extracting, modifying input data or even implementing embedded and external DSLs."
 
-[Overview here](https://www.red-lang.org/search?q=parse)
+[Overview here.](https://www.red-lang.org/search?q=parse)
 
-[Full documentation here](https://github.com/red/docs/blob/master/en/parse.adoc)
+[Full documentation here.](https://github.com/red/docs/blob/master/en/parse.adoc)
 
 ----
 
