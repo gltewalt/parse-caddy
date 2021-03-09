@@ -2,14 +2,15 @@ Red [
 	Needs: 'View
 	Title:  "Parse Caddy"
 	Author: "Greg Tewalt"
+	File: %caddy.red
 ]
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
 
-img: load/as #do keep [read/binary %caddy.png] 'png  ; copy of caddy.png in home folder
+#include %mascot.red
 
 context [
-
+	
 	check: does [
 		attempt [
 			(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? [r] populate-log)
