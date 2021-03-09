@@ -61,3 +61,9 @@ Be careful.
 - The buttons should be self explanatory, but let me know if you have questions.
 
 ![log](images/log.png)
+
+----
+
+# Compiling
+
+* For now - Place a copy of caddy.png in your home folder before compiling.

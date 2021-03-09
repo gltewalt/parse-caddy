@@ -6,7 +6,7 @@ Red [
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
 
-img: load/as #do keep [read/binary %caddy.png] 'png 
+img: load/as #do keep [read/binary %caddy.png] 'png  ; copy of caddy.png in home folder
 
 context [
 
