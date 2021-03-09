@@ -1,6 +1,6 @@
 
 
-![caddy](caddy.png) 
+![caddy](images/caddy.png) 
 
 # Parse Caddy - A visual parse rule checker     
 
