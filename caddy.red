@@ -13,17 +13,17 @@ context [
 	
 	check: does [
 		attempt [
-			(parse/trace convert-to-block-vals? i to-block r/text :on-parse-event reset-field? [r] populate-log)
+			(parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event reset-field? [rule-field] populate-log)
 		]
 	]
 
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
 	convert-to-block-vals?: func [fld] [
-		either true = t/data [to-block fld/text][fld/text]
+		either true = block-check/data [to-block fld/text][fld/text]
 	]
 
-	load-multi-rule: does [attempt [do load _mr/text]]
+	load-multi-rule: does [attempt [do load mr/text]]
 
 	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
@@ -46,12 +46,13 @@ context [
 					"At index:" index? input newline
 				]
 				either match? = true [
-					r/color: 102.255.102  	      ; turn a shade of green
-					if any [t/data = false t/data = none][                         ; if we're not parsing block values,
-						_i/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
+					rule-field/color: 102.255.102  	      ; turn a shade of green
+					if any [block-check/data = false block-check/data = none][     ; if we're not parsing block values,
+						input-field/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
 					]
-					if true = mt/data [
-						_i/text: head input    ; if "input" changes, update the text in the Input field
+					if true = modify-check/data [
+						; will grab tool words or system words... be careful?
+						input-field/data: head input  ; if "input" changes, update the text in the Input field
 					]
 				][
 					clear-output [match-txt] 
@@ -63,8 +64,8 @@ context [
 					"Input:"    mold/flat/part input 50 newline
 					"Rule:"     mold/flat/part rule 50 newline
 				]
-				r/color: 255.51.51  ; shade of red
-				_i/selected: none
+				rule-field/color: 255.51.51  ; shade of red
+				input-field/selected: none
 			]
 			match [] ; after a value has matched
 			
@@ -83,11 +84,11 @@ context [
 	]
 
 	reset-all: does [
-		_i/data: copy "" 
-		r/data: copy "" 
-		reset-field? [r _i] 
-		t/data: false 
-		mt/data: false
+		input-field/data: copy "" 
+		rule-field/data: copy "" 
+		reset-field? [rule-field input-field] 
+		block-check/data: false 
+		modify-check/data: false
 		reset-log
 		reset-mutli
 	]
@@ -98,40 +99,46 @@ context [
 			if none? face/data [
 				face/color: white 
 				clear-output [fetch-txt match-txt end-txt] 
-				_i/selected: none 
+				input-field/selected: none 
 			]
 		]
 	]
   
 	reset-log:   does [clear log/text]
 
-	reset-mutli: does [clear _mr/text]
+	reset-mutli: does [clear mr/text]
 
 	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
 		either none = fld/data [
 			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
 				clear-output [match-txt end-txt]
-			r/color: white
+			rule-field/color: white
 		][
 			fetch-txt/data: copy ""
 		]
 	]
 
 	;-- Begin VID data ---------------------------------------------------------------------------------------------------
-    ; --
+
 	home: [
 
 		size 80x600
 		backdrop wheat
 		style my-field: field 500x40  font [name: "Segoe UI" size: 14 color: black]
 		style my-text:  text  500x90  font [name: "Segoe UI" size: 16 color: black]
-		at 50x30  mt:   check "Modify Input Field" on-change [(r/data: copy "" reset-field? [r _i])]
-		at 200x30 t:    check "Parse Block Values" on-change [(r/data: copy "" reset-field? [r _i])]
-		at 635x30 b:    button "Reset Caddy" [(reset-all)]
+		at 50x30  modify-check: check "Modify Input Field" on-change [
+			rule-field/data: copy "" reset-field? [rule-field input-field]
+		]
+		at 200x30 block-check:  check "Parse Block Values" on-change [
+			rule-field/data: copy "" reset-field? [rule-field input-field]
+		]
+		at 635x30 button "Reset Caddy" [reset-all]
 		at 50x70  h4 "Input"
-		at 50x100 _i: my-field 700x40 on-change [(if t/data = true [scan _i])]
+		at 50x100 input-field: my-field 700x40 on-change [
+			if block-check/data = true [scan input-field]
+		]
 		at 50x170 h4 "Rule"
-		at 50x200 r: my-field 700x40 on-change [(check)] 
+		at 50x200 rule-field: my-field 700x40 on-change [check] 
 		at 55x275 fetch-txt: my-text 
 		at 55x360 match-txt: my-text
 		at 55x445 end-txt:   my-text
@@ -145,7 +152,7 @@ context [
 		at 50x30  button "Load Rules"  [load-multi-rule]
 		at 650x30 button "Clear Rules" [reset-mutli]
 		at 50x70  h4 "Enter Multiple Rules" 
-		at 50x100 _mr: my-area
+		at 50x100 mr: my-area
 	]
 
 
