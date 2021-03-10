@@ -23,7 +23,7 @@ context [
 		either true = t/data [to-block fld/text][fld/text]
 	]
 
-		load-multi-rule: does [do load mr/text]
+	load-multi-rule: does [attempt [do load _mr/text]]
 
 	; on-parse-event taken from environment/functions.red, and modified
 	on-parse-event: func [
@@ -48,10 +48,10 @@ context [
 				either match? = true [
 					r/color: 102.255.102  	      ; turn a shade of green
 					if any [t/data = false t/data = none][                         ; if we're not parsing block values,
-						i/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
+						_i/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
 					]
 					if true = mt/data [
-						i/text: head input    ; if "input" changes, update the text in the Input field
+						_i/text: head input    ; if "input" changes, update the text in the Input field
 					]
 				][
 					clear-output [match-txt] 
@@ -64,7 +64,7 @@ context [
 					"Rule:"     mold/flat/part rule 50 newline
 				]
 				r/color: 255.51.51  ; shade of red
-				i/selected: none
+				_i/selected: none
 			]
 			match [] ; after a value has matched
 			
@@ -83,9 +83,9 @@ context [
 	]
 
 	reset-all: does [
-		i/data: copy "" 
+		_i/data: copy "" 
 		r/data: copy "" 
-		reset-field? [r i] 
+		reset-field? [r _i] 
 		t/data: false 
 		mt/data: false
 		reset-log
@@ -98,14 +98,14 @@ context [
 			if none? face/data [
 				face/color: white 
 				clear-output [fetch-txt match-txt end-txt] 
-				i/selected: none 
+				_i/selected: none 
 			]
 		]
 	]
   
 	reset-log:   does [clear log/text]
 
-	reset-mutli: does [clear mr/text]
+	reset-mutli: does [clear _mr/text]
 
 	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
 		either none = fld/data [
@@ -118,18 +118,18 @@ context [
 	]
 
 	;-- Begin VID data ---------------------------------------------------------------------------------------------------
-
+    ; --
 	home: [
 
 		size 80x600
 		backdrop wheat
 		style my-field: field 500x40  font [name: "Segoe UI" size: 14 color: black]
 		style my-text:  text  500x90  font [name: "Segoe UI" size: 16 color: black]
-		at 50x30  mt:   check "Modify Input Field" on-change [(r/data: copy "" t/data: false reset-field? [r i])]
-		at 200x30 t:    check "Parse Block Values" on-change [(r/data: copy "" mt/data: false reset-field? [r i])]
+		at 50x30  mt:   check "Modify Input Field" on-change [(r/data: copy "" reset-field? [r _i])]
+		at 200x30 t:    check "Parse Block Values" on-change [(r/data: copy "" reset-field? [r _i])]
 		at 635x30 b:    button "Reset Caddy" [(reset-all)]
 		at 50x70  h4 "Input"
-		at 50x100 i: my-field 700x40 on-change [(if t/data = true [scan i])]
+		at 50x100 _i: my-field 700x40 on-change [(if t/data = true [scan _i])]
 		at 50x170 h4 "Rule"
 		at 50x200 r: my-field 700x40 on-change [(check)] 
 		at 55x275 fetch-txt: my-text 
@@ -145,7 +145,7 @@ context [
 		at 50x30  button "Load Rules"  [load-multi-rule]
 		at 650x30 button "Clear Rules" [reset-mutli]
 		at 50x70  h4 "Enter Multiple Rules" 
-		at 50x100 mr: my-area
+		at 50x100 _mr: my-area
 	]
 
 
