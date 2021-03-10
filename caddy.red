@@ -169,7 +169,7 @@ context [
 		at 580x30 button "Save" [
 			attempt [write rejoin [request-dir now "-caddy-log.txt"] log/text]
 		]
-		at 650x30 button "Clear Log" [(reset-log)]
+		at 650x30 button "Clear Log" [reset-log]
 		at 50x70  h4 "Log file" 
 		at 50x100 log: my-area 
 	]
