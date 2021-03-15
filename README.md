@@ -22,7 +22,7 @@ From red-lang.org
 - Modify Input Field is recommended, otherwise watch the "Remaining input:" text for changes.
 
 
-![input](images/input.png)
+![input](images/input.gif)
 
 ----
 
@@ -30,13 +30,13 @@ From red-lang.org
 
 - The tool will check if the rule passes or fails as you type. Clearing the field will reset some things :)
 
-![rule](images/rule.png)
+![rule](images/rule.gif)
 
 ----
 
 * Check to parse Block values.
 
-![block](images/block.png)
+![block](images/blocks.gif)
 
 ----
 
@@ -61,3 +61,11 @@ Be careful.
 - The buttons should be self explanatory, but let me know if you have questions.
 
 ![log](images/log.png)
+
+----
+
+**Samples**
+
+* Moving positions
+
+![sample](images/sample.gif)

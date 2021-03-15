@@ -2,7 +2,7 @@ Red [
 	Needs: 'View
 	Title:  "Parse Caddy"
 	Author: "Greg Tewalt"
-	File: %caddy.red
+	File:   %caddy.red
 ]
 
 r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
@@ -10,10 +10,10 @@ r: none ; compiler complains about the word t, specifically, so declaring it her
 #include %mascot.red
 
 context [
-	
-	check: does [
+    
+	check: does [ 
 		attempt [
-			(parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event reset-field? [rule-field] populate-log)
+			parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
 		]
 	]
 
@@ -40,6 +40,7 @@ context [
 			push  [] ; after rule is pushed on the stack
 			pop [    
 				; before rule is popped from the stack
+              
 				match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
@@ -51,18 +52,16 @@ context [
 						input-field/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
 					]
 					if true = modify-check/data [
-						; will grab tool words or system words... be careful?
 						input-field/data: head input  ; if "input" changes, update the text in the Input field
 					]
 				][
 					clear-output [match-txt] 
-					; red color is taken care of in the fetch event
 				]
 			]
 			fetch [ ; before a new rule is fetched
 				fetch-txt/data: reduce [
 					"Input:"    mold/flat/part input 50 newline
-					"Rule:"     mold/flat/part rule 50 newline
+					"Rule:"     mold/flat/part rule  50 newline
 				]
 				rule-field/color: 255.51.51  ; shade of red
 				input-field/selected: none
@@ -71,6 +70,7 @@ context [
 			
 			end [    ; after reaching end of input
 				end-txt/data: reduce ["Parse return:" match?]
+				
 			] 
 		]
 		true
@@ -110,8 +110,8 @@ context [
 
 	scan: func [fld][ ; Used for Block mode. illegal characters cause the field data to be none, as if empty
 		either none = fld/data [
-			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters like , and \."}
-				clear-output [match-txt end-txt]
+			fetch-txt/data: {"In Block Mode, watch out for empty Input, or illegal characters"}
+			clear-output [match-txt end-txt]
 			rule-field/color: white
 		][
 			fetch-txt/data: copy ""
@@ -121,7 +121,6 @@ context [
 	;-- Begin VID data ---------------------------------------------------------------------------------------------------
 
 	home: [
-
 		size 80x600
 		backdrop wheat
 		style my-field: field 500x40  font [name: "Segoe UI" size: 14 color: black]
@@ -138,7 +137,7 @@ context [
 			if block-check/data = true [scan input-field]
 		]
 		at 50x170 h4 "Rule"
-		at 50x200 rule-field: my-field 700x40 on-change [check] 
+		at 50x200 rule-field: my-field 700x40 on-change [check reset-field? [rule-field]]
 		at 55x275 fetch-txt: my-text 
 		at 55x360 match-txt: my-text
 		at 55x445 end-txt:   my-text
