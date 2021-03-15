@@ -41,9 +41,10 @@ From red-lang.org
 ----
 
 * Type in multiple parse rules here.
-- Click the Load Rules button.
 
 ![multi](images/multi.png)
+
+- Click the Load Rules button.
 
 * Use them in the Rule field
 
@@ -61,7 +62,7 @@ Be careful.
 
 **Log**
 
-* There's a Log area for those who like logs.
+<!-- * There's a Log area for those who like logs. -->
 - The buttons should be self explanatory, but let me know if you have questions.
 
 ![log](images/log.png)
