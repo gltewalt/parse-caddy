@@ -131,13 +131,18 @@ context [
 		at 200x30 block-check:  check "Parse Block Values" on-change [
 			rule-field/data: copy "" reset-field? [rule-field input-field]
 		]
+		at 350x30 auto-check: check true "Auto"
 		at 635x30 button "Reset Caddy" [reset-all]
 		at 50x70  h4 "Input"
 		at 50x100 input-field: my-field 700x40 on-change [
 			if block-check/data = true [scan input-field]
 		]
 		at 50x170 h4 "Rule"
-		at 50x200 rule-field: my-field 700x40 on-change [check reset-field? [rule-field]]
+		at 50x200 rule-field: my-field 700x40 on-change [
+			if auto-check/data [check reset-field? [rule-field]]
+		] on-enter [
+			if not auto-check/data [check reset-field? [rule-field]]
+		]
 		at 55x275 fetch-txt: my-text 
 		at 55x360 match-txt: my-text
 		at 55x445 end-txt:   my-text

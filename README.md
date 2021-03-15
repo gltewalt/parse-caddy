@@ -28,9 +28,15 @@ From red-lang.org
 
 * Type in your rule. 
 
-- The tool will check if the rule passes or fails as you type. Clearing the field will reset some things :)
+- In Auto Mode (default), the tool will check if a rule passes or fails as you type. Clearing the field will reset some things :)
 
 ![rule](images/rule.gif)
+
+----
+
+* In Manual Mode, press Enter to check a rule.
+
+![manual](images/manual.gif)
 
 ----
 
