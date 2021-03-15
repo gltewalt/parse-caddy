@@ -47,7 +47,9 @@ From red-lang.org
 
 * Use them in the Rule field
 
-![multi-2](images/multi-2.png)
+![multi-2](images/multi.gif)
+
+-----
 
 **CAUTION**
 
@@ -57,7 +59,9 @@ Be careful.
 
 ----
 
-* And there's a Log area for those who like logs.
+**Log**
+
+* There's a Log area for those who like logs.
 - The buttons should be self explanatory, but let me know if you have questions.
 
 ![log](images/log.png)
