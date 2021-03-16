@@ -90,6 +90,7 @@ context [
 		modify-check/data: false
 		reset-log
 		reset-mutli
+		face/parent/color: wheat 
 	]
 
 	reset-field?: func [flds [block!]][
