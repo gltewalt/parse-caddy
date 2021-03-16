@@ -40,7 +40,6 @@ context [
 			push  [] ; after rule is pushed on the stack
 			pop [    
 				; before rule is popped from the stack
-              
 				match-txt/data: reduce [
 					"Match?" match? newline
 					"Remaining input:" input newline
@@ -70,7 +69,7 @@ context [
 			
 			end [    ; after reaching end of input
 				end-txt/data: reduce ["Parse return:" match?]
-				
+				either match? [face/parent/color: 102.255.102][face/parent/color: wheat]
 			] 
 		]
 		true
@@ -180,6 +179,6 @@ context [
 
 		view compose/deep [
 		title "Parse Caddy"
-			tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
+		windows: tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
 	]
 ]
