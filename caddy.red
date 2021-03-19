@@ -188,7 +188,7 @@ context [
 	]
 
 		view compose/deep [
-		title "Parse Caddy"
-		tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
-	]
+			title "Parse Caddy"
+			tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
+		]
 ]
