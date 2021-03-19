@@ -51,12 +51,11 @@ context [
 						input-field/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
 					]
 					if true = modify-check/data [
-						either block-check/data [
-						input-field/data: mold head input
+						either block-check/data [ ; if "input" changes, update the text in the Input field
+							input-field/data: mold head input
 						][
 							input-field/data: form head input
 						]
-						;input-field/text: to-block input  ; if "input" changes, update the text in the Input field
 					]
 				][
 					clear-output [match-txt] 
@@ -138,7 +137,7 @@ context [
 				input-field/text: rejoin ["{" input-field/data "}"]
 			]
 			rule-field/color: white
-            end-txt/color: wheat
+            		end-txt/color: wheat
 			clear-output [match-txt end-txt]
 		]
 		at 350x30 auto-check: check true "Auto"
