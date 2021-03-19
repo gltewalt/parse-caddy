@@ -20,7 +20,7 @@ context [
 	clear-output: func [areas [block!]][foreach a areas [face: get a face/data: copy ""]]
 
 	convert-to-block-vals?: func [fld] [
-		either true = block-check/data [to-block fld/text][fld/text]
+		either true = block-check/data [fld/data][fld/text]
 	]
 
 	load-multi-rule: does [attempt [do load mr/text]]
@@ -51,7 +51,12 @@ context [
 						input-field/selected: to pair! rejoin [index? input 'x index? input] ; select index of match in Input field
 					]
 					if true = modify-check/data [
-						input-field/data: head input  ; if "input" changes, update the text in the Input field
+						either block-check/data [
+						input-field/data: mold head input
+						][
+							input-field/data: form head input
+						]
+						;input-field/text: to-block input  ; if "input" changes, update the text in the Input field
 					]
 				][
 					clear-output [match-txt] 
@@ -69,7 +74,7 @@ context [
 			
 			end [    ; after reaching end of input
 				end-txt/data: reduce ["Parse return:" match?]
-				either match? [face/parent/color: 102.255.102][face/parent/color: wheat]
+				either match? [end-txt/color: 102.255.102][end-txt/color: wheat]
 			] 
 		]
 		true
@@ -90,7 +95,7 @@ context [
 		modify-check/data: false
 		reset-log
 		reset-mutli
-		face/parent/color: wheat 
+		end-txt/color: wheat 
 	]
 
 	reset-field?: func [flds [block!]][
@@ -125,11 +130,16 @@ context [
 		backdrop wheat
 		style my-field: field 500x40  font [name: "Segoe UI" size: 14 color: black]
 		style my-text:  text  500x90  font [name: "Segoe UI" size: 16 color: black]
-		at 50x30  modify-check: check "Modify Input Field" on-change [
-			rule-field/data: copy "" reset-field? [rule-field input-field]
-		]
+		at 50x30  modify-check: check true "Modify Input Field"
 		at 200x30 block-check:  check "Parse Block Values" on-change [
-			rule-field/data: copy "" reset-field? [rule-field input-field]
+			either block-check/data [
+				input-field/text: mold input-field/data
+			][
+				input-field/text: rejoin ["{" input-field/data "}"]
+			]
+			rule-field/color: white
+            end-txt/color: wheat
+			clear-output [match-txt end-txt]
 		]
 		at 350x30 auto-check: check true "Auto"
 		at 635x30 button "Reset Caddy" [reset-all]
@@ -180,6 +190,6 @@ context [
 
 		view compose/deep [
 		title "Parse Caddy"
-		windows: tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
+		tab-panel ["Home" [(home)] "Multi Rule" [(multi-rule)] "Log" [(log)]]
 	]
 ]
