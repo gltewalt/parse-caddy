@@ -14,6 +14,11 @@ From red-lang.org
 
 [Full documentation here.](https://github.com/red/docs/blob/master/en/parse.adoc)
 
+
+This tool is intended to let a user see what is going on as they write basic to intermediate parse rules.
+
+If you can add to, or improve this tool, please do. I'm sure parse beginers would be grateful.
+
 ----
 
 ## Tool usage
@@ -28,7 +33,7 @@ From red-lang.org
 
 * Type in your rule. 
 
-- In Auto Mode (default), the tool will check if a rule passes or fails as you type. Clearing the field will reset some things :)
+- In Auto Mode (default), the tool will check if a rule passes or fails as you type. Clearing the field will reset some things. The results of any probe, or collect / keep, should be visible in the console.
 
 ![rule](images/rule.gif)
 
