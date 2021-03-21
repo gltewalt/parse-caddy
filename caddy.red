@@ -10,7 +10,7 @@ r: none ; compiler complains about the word t, specifically, so declaring it her
 #include %mascot.red
 
 context [
-    
+
 	check: does [ 
 		attempt [
 			parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
@@ -72,7 +72,7 @@ context [
 			match [] ; after a value has matched
 			
 			end [    ; after reaching end of input
-				end-txt/data: reduce ["Parse return:" match?]
+				end-txt/data: reduce ["End of input:" match?]
 				either match? [end-txt/color: 102.255.102][end-txt/color: wheat]
 			] 
 		]
@@ -137,7 +137,7 @@ context [
 				input-field/text: rejoin ["{" input-field/data "}"]
 			]
 			rule-field/color: white
-            		end-txt/color: wheat
+            end-txt/color: wheat
 			clear-output [match-txt end-txt]
 		]
 		at 350x30 auto-check: check true "Auto"
@@ -155,6 +155,7 @@ context [
 		at 55x275 fetch-txt: my-text 
 		at 55x360 match-txt: my-text
 		at 55x445 end-txt:   my-text
+		;at 300x445 result-txt: my-text
 		at 645x320 image img 
 	]
 
