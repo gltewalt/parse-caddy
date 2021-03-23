@@ -33,10 +33,13 @@ If you can add to, or improve this tool, please do. I'm sure parse beginers woul
 
 * Type in your rule. 
 
-- In Auto Mode (default), the tool will check if a rule passes or fails as you type. Clearing the field will reset some things. The results of any probe, or collect / keep, should be visible in the console.
+- In Auto Mode (default), the tool will check if a rule passes or fails as you type. Clearing the field will reset some things. The results of any probe should be visible in the console.
 
 ![rule](images/rule.gif)
 
+Collect / keep reults will appear next to the End of input value:
+
+![results](images/results.png)
 ----
 
 * In Manual Mode, press Enter to check a rule.
