@@ -37,7 +37,7 @@ If you can add to, or improve this tool, please do. I'm sure parse beginers woul
 
 ![rule](images/rule.gif)
 
-Collect / keep reults will appear next to the End of input value:
+Collect / keep results will appear next to the End of input value:
 
 ![results](images/results.png)
 ----
