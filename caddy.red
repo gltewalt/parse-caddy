@@ -138,7 +138,7 @@ context [
 			]
 			rule-field/color: white
             		end-txt/color: wheat
-			clear-output [match-txt end-txt]
+			clear-output [match-txt end-txt result-txt]
 		]
 		at 350x30 auto-check: check true "Auto"
 		at 635x30 button "Reset Caddy" [reset-all]
