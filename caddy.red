@@ -12,8 +12,8 @@ r: none ; compiler complains about the word t, specifically, so declaring it her
 context [
 
 	check: does [ 
-		attempt [
-			parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
+		attempt [               ; may not be ideal to assign the results to result-txt/data here, but it works
+			result-txt/data: mold parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
 		]
 	]
 
@@ -102,7 +102,7 @@ context [
 			face: get f 
 			if none? face/data [
 				face/color: white 
-				clear-output [fetch-txt match-txt end-txt] 
+				clear-output [fetch-txt match-txt end-txt result-txt] 
 				input-field/selected: none 
 			]
 		]
@@ -155,7 +155,7 @@ context [
 		at 55x275 fetch-txt: my-text 
 		at 55x360 match-txt: my-text
 		at 55x445 end-txt:   my-text
-		;at 300x445 result-txt: my-text
+		at 300x445 result-txt: my-text
 		at 645x320 image img 
 	]
 
