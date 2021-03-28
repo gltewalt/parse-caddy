@@ -137,7 +137,7 @@ context [
 				input-field/text: form input-field/data 
 			]
 			rule-field/color: white
-            end-txt/color: wheat
+           		end-txt/color: wheat
 			clear-output [match-txt end-txt result-txt]
 		]
 		at 350x30 auto-check: check true "Auto"
