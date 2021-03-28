@@ -17,7 +17,7 @@ From red-lang.org
 
 This tool is intended to let a user see what is going on as they write basic to intermediate parse rules.
 
-If you can add to, or improve this tool, please do. I'm sure parse beginers would be grateful.
+If you can improve this tool, I'm sure parse beginers would be grateful.
 
 ----
 

@@ -5,15 +5,15 @@ Red [
 	File:   %caddy.red
 ]
 
-r: none ; compiler complains about the word t, specifically, so declaring it here to get it to compile
+r: none ; compiler complains about the word r, specifically, so declaring it here to get it to compile
 
 #include %mascot.red
 
 context [
 
 	check: does [ 
-		attempt [               ; may not be ideal to assign the results to result-txt/data here, but it works
-			result-txt/data: mold parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
+		attempt [ 
+			result-txt/data: append copy "Parse result: " mold parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
 		]
 	]
 
@@ -45,6 +45,7 @@ context [
 					"Remaining input:" input newline
 					"At index:" index? input newline
 				]
+
 				either match? = true [
 					rule-field/color: 102.255.102  	      ; turn a shade of green
 					if any [block-check/data = false block-check/data = none][     ; if we're not parsing block values,
@@ -72,8 +73,7 @@ context [
 			match [] ; after a value has matched
 			
 			end [    ; after reaching end of input
-				end-txt/data: reduce ["End of input:" match?]
-				either match? [end-txt/color: 102.255.102][end-txt/color: wheat]
+				end-txt/data:    reduce ["End of input:" match?]
 			] 
 		]
 		true
@@ -129,7 +129,7 @@ context [
 		backdrop wheat
 		style my-field: field 500x40  font [name: "Segoe UI" size: 14 color: black]
 		style my-text:  text  500x90  font [name: "Segoe UI" size: 16 color: black]
-		at 50x30  modify-check: check true "Modify Input Field"
+		at 50x30  modify-check: check  "Modify Input Field"
 		at 200x30 block-check:  check "Parse Block Values" on-change [
 			either block-check/data [
 				input-field/text: mold input-field/data
@@ -152,9 +152,9 @@ context [
 		] on-enter [
 			if not auto-check/data [check reset-field? [rule-field]]
 		]
-		at 55x275 fetch-txt: my-text 
-		at 55x360 match-txt: my-text
-		at 55x445 end-txt:   my-text
+		at 55x275  fetch-txt:  my-text 
+		at 55x360  match-txt:  my-text
+		at 55x445  end-txt:    my-text
 		at 300x445 result-txt: my-text
 		at 645x320 image img 
 	]
