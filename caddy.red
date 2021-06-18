@@ -13,7 +13,7 @@ context [
 
 	check: does [ 
 		attempt [ 
-			result-txt/data: append copy "Parse result: " mold parse/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
+			result-txt/data: append copy "Parse result: " mold parse/case/trace convert-to-block-vals? input-field to-block rule-field/text :on-parse-event populate-log
 		]
 	]
 
