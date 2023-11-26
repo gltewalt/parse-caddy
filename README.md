@@ -4,6 +4,10 @@
 
 # Parse Caddy - A visual parse rule checker     
 
+Easiest way to use: Download caddy.red and mascot.red files to your home directory, then call Red with caddy.red...
+
+`gt@lappy:~$ ./red caddy.red`
+
 What's Parse?
 
 From red-lang.org
